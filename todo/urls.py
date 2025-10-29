@@ -4,6 +4,7 @@ from todo.views import (
     TaskListView,
     TagListView,
     TagCreateView,
+    TagUpdateView,
 )
 
 
@@ -13,4 +14,5 @@ urlpatterns = [
     path("", TaskListView.as_view(), name="home"),
     path("tags/", TagListView.as_view(), name="tag_list"),
     path("tags/add/", TagCreateView.as_view(), name="tag_create"),
+    path("tags/<int:pk>/edit/", TagUpdateView.as_view(), name="tag_update"),
 ]
