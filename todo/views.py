@@ -6,12 +6,18 @@ from todo.models import Task, Tag
 from todo.forms import TaskForm
 
 
-class TaskListView(generic.ListView):
-    model = Task
-    template_name = "todo/task_list.html"
-    context_object_name = "tasks"
-    queryset = Task.objects.prefetch_related("tags").all().order_by("is_done", "-created_at")
-
+class TaskListView(generic.View):
+    def get(self, request, *args, **kwargs):
+        tasks = Task.objects.prefetch_related("tags").all().order_by("is_done", "-created_at")
+        return render(request, "todo/task_list.html", {"tasks": tasks})
+    
+    def post(self, request, *args, **kwargs):
+        task_id = request.POST.get("task_id")
+        task = Task.objects.get(id=task_id)
+        task.is_done = not task.is_done
+        task.save()
+        tasks = Task.objects.prefetch_related("tags").all().order_by("is_done", "-created_at")
+        return render(request, "todo/task_list.html", {"tasks": tasks})
 
 class TaskCreateView(generic.CreateView):
     model = Task
