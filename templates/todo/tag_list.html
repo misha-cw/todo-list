@@ -22,7 +22,7 @@
               <a href="{% url 'todo:tag_update' tag.pk %}" class="btn btn-warning btn-sm">Edit</a>
             </td>
             <td>  
-              <a href="#" class="btn btn-danger btn-sm">Delete</a>
+              <a href="{% url 'todo:tag_delete' tag.pk %}" class="btn btn-danger btn-sm">Delete</a>
             </td>
           </tr>
         {% endfor %}
